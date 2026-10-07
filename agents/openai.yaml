@@ -1,0 +1,10 @@
+interface:
+  display_name: "Рекламные углы"
+  short_description: "Комментарии аудитории превращаются в рекламные углы и хуки"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/hero.png"
+  brand_color: "#FF6B6B"
+  default_prompt: "Используй $ad-angles, чтобы найти рекламные углы и хуки для моего продукта по комментариям моей аудитории."
+
+policy:
+  allow_implicit_invocation: true

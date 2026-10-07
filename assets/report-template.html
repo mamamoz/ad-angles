@@ -1,0 +1,353 @@
+<!doctype html>
+<!--
+  ИНСТРУКЦИЯ ДЛЯ ИИ (удали этот комментарий в готовом документе)
+  1. Меняй только текст в {{ФИГУРНЫХ_СКОБКАХ}}. Дизайн, стили и скрипт не трогай.
+  2. Блоки, помеченные «ПОВТОРИ», копируй столько раз, сколько нужно.
+     Блоки, помеченные «НЕОБЯЗАТЕЛЬНО», удаляй целиком, если нечего писать.
+  3. Все цитаты — дословно, в «ёлочках». Источник цитаты — название видео/страницы
+     и номер скриншота, либо ссылка. Ссылку ставь в href, если она есть, иначе замени <a> на <span>.
+  4. Оценка — число от 1 до 10.
+  5. Пиши просто, без жаргона. Короткие фразы.
+  6. Сохрани файл как «углы-<продукт>.html».
+-->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Рекламные углы — {{ПРОДУКТ}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:#FF6B6B; --coral-soft:#FFF0F0; --coral-line:#FFD6D6;
+    --blue:#0066FF; --blue-soft:#EEF4FF;
+    --ink:#1A1A1A; --ink-2:#333333; --muted:#6B6B6B;
+    --paper:#FFFFFF; --bg:#FAFAF7; --line:#ECECEC; --grey-soft:#F5F5F5;
+    --radius:22px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    font-size:19px;line-height:1.55}
+  .page{max-width:780px;margin:0 auto;padding:28px 16px 64px}
+  h1,h2,h3{line-height:1.15;margin:0;letter-spacing:-.01em}
+  p{margin:0}
+  a{color:var(--blue)}
+
+  /* Обложка */
+  .cover{background:var(--paper);border-radius:28px;padding:36px 28px 30px;
+    border:1px solid var(--line);position:relative;overflow:hidden}
+  .cover::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;
+    border-radius:50%;background:var(--coral);opacity:.12}
+  .kicker{display:inline-block;font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--coral);margin-bottom:14px}
+  .cover h1{font-size:42px;font-weight:800}
+  .cover .sub{color:var(--ink-2);margin-top:12px;font-size:19px}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .stat{background:var(--grey-soft);border-radius:999px;padding:8px 16px;font-size:16px;font-weight:600}
+  .stat b{color:var(--coral)}
+  .note{margin-top:18px;font-size:16px;color:var(--muted);background:var(--grey-soft);border-radius:14px;padding:12px 16px}
+
+  /* Секции */
+  section{margin-top:44px}
+  .sec-title{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .sec-title h2{font-size:30px;font-weight:800}
+  .sec-title .dot{width:14px;height:14px;border-radius:50%;background:var(--coral);flex:none}
+  .sec-lead{color:var(--muted);margin:-6px 0 18px;font-size:17px}
+
+  /* Главное */
+  .main-grid{display:grid;gap:14px}
+  .main-item{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+  .main-item .label{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--coral)}
+  .main-item .what{font-size:22px;font-weight:700;margin-top:6px}
+  .main-item .q{margin-top:10px;color:var(--ink-2);font-size:17px}
+
+  /* Карточка угла */
+  .angle{background:var(--paper);border:2px solid var(--coral-line);border-radius:26px;padding:26px 22px;margin-bottom:22px;break-inside:avoid}
+  .angle-head{display:flex;gap:14px;align-items:flex-start}
+  .rank{flex:none;width:52px;height:52px;border-radius:16px;background:var(--coral);color:#fff;
+    font-weight:800;font-size:26px;display:flex;align-items:center;justify-content:center}
+  .angle-head h3{font-size:26px;font-weight:800;padding-top:4px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .pill{font-size:15px;font-weight:600;border-radius:999px;padding:5px 12px;background:var(--grey-soft);color:var(--ink-2)}
+  .pill.score{background:var(--blue);color:#fff}
+  .pill.type{background:var(--coral-soft);color:#C94444}
+  .block{margin-top:20px}
+  .block-label{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .count{font-size:20px;font-weight:700}
+  .count small{font-weight:500;color:var(--muted);font-size:16px}
+  blockquote{margin:10px 0 0;background:var(--coral-soft);border-left:5px solid var(--coral);
+    border-radius:0 16px 16px 0;padding:14px 18px;font-size:19px}
+  blockquote .src{display:block;margin-top:6px;font-size:14px;color:var(--muted)}
+  blockquote .src a,blockquote .src span{color:var(--muted)}
+  .promise{font-size:19px}
+  .hooks{display:grid;gap:10px}
+  .hook{display:flex;gap:12px;align-items:center;background:var(--blue-soft);border-radius:16px;padding:14px 14px 14px 18px}
+  .hook .h-body{flex:1;min-width:0}
+  .hook .h-type{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+  .hook .h-text{font-size:20px;font-weight:700;margin-top:2px}
+  .copy{flex:none;border:2px solid var(--blue);background:#fff;color:var(--blue);border-radius:12px;
+    font:600 15px "Onest",system-ui,sans-serif;padding:9px 12px;cursor:pointer;min-height:44px}
+  .copy:hover{background:var(--blue);color:#fff}
+  .copy.done{background:var(--blue);color:#fff}
+  .proof{background:var(--grey-soft);border-radius:14px;padding:12px 16px;font-size:17px}
+
+  /* Короткие углы */
+  .mini{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;break-inside:avoid}
+  .mini-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  .mini h3{font-size:21px;font-weight:700}
+  .mini .why{color:var(--muted);font-size:16px;margin-top:4px}
+  .mini .hook{margin-top:12px}
+
+  /* Словарь */
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{border:2px solid var(--coral-line);background:var(--paper);border-radius:999px;padding:9px 16px;
+    font:500 17px "Onest",system-ui,sans-serif;color:var(--ink);cursor:pointer;text-align:left}
+  .chip:hover,.chip.done{border-color:var(--coral);background:var(--coral-soft)}
+
+  /* Возражения */
+  .obj{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;break-inside:avoid}
+  .obj .say{font-size:20px;font-weight:700}
+  .obj .n{font-size:15px;color:var(--muted);margin-top:2px}
+  .obj .answer{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+  .obj .answer b{color:var(--blue)}
+
+  /* Боли без решения */
+  .gap{background:var(--grey-soft);border-radius:var(--radius);padding:18px 20px;margin-bottom:10px}
+
+  /* Шаги */
+  .steps{counter-reset:s;display:grid;gap:12px;padding:0;margin:0;list-style:none}
+  .steps li{counter-increment:s;background:var(--paper);border:1px solid var(--line);border-radius:18px;
+    padding:16px 18px 16px 70px;position:relative}
+  .steps li::before{content:counter(s);position:absolute;left:18px;top:14px;width:36px;height:36px;border-radius:12px;
+    background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+  /* Источники */
+  .sources{padding:0;margin:0;list-style:none;display:grid;gap:8px;font-size:17px}
+  .sources li{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+  .sources .c{color:var(--muted);font-size:15px}
+
+  footer{margin-top:52px;text-align:center;color:var(--muted);font-size:15px}
+  footer b{color:var(--coral)}
+
+  @media (max-width:560px){
+    body{font-size:18px}
+    .cover{padding:28px 20px 24px}
+    .cover h1{font-size:33px}
+    .cover::after{width:130px;height:130px;right:-55px;top:-55px}
+    .sec-title h2{font-size:25px}
+    .angle{padding:22px 16px}
+    .angle-head h3{font-size:22px}
+    .rank{width:44px;height:44px;font-size:22px;border-radius:14px}
+    .hook{flex-direction:column;align-items:stretch}
+    .copy{width:100%}
+    .steps li{padding-left:64px}
+  }
+  @media print{
+    body{background:#fff;font-size:15px}
+    .page{padding:0}
+    .copy{display:none}
+    .chip{cursor:default}
+    section{margin-top:28px}
+    .angle,.mini,.obj{break-inside:avoid}
+    a{color:var(--ink);text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- ОБЛОЖКА -->
+  <header class="cover">
+    <div class="kicker">Рекламные углы</div>
+    <h1>{{ПРОДУКТ — коротко, 2–6 слов}}</h1>
+    <p class="sub">{{Для кого: аудитория одной фразой}}</p>
+    <div class="stats">
+      <span class="stat"><b>{{N}}</b> комментариев</span>
+      <span class="stat"><b>{{M}}</b> источников</span>
+      <span class="stat"><b>{{K}}</b> углов</span>
+      <span class="stat">{{ДАТА, например 7 октября 2026}}</span>
+    </div>
+    <!-- НЕОБЯЗАТЕЛЬНО: если данных мало или были допущения -->
+    <p class="note">{{Например: «Собрано по 12 скриншотам — отчёт предварительный. Добавь ещё 2–3 видео, чтобы выводы стали надёжнее.»}}</p>
+  </header>
+
+  <!-- НЕОБЯЗАТЕЛЬНО: только при повторном запуске -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Что изменилось</h2></div>
+    <div class="main-item"><p>{{Какие боли новые, какие ушли, какие выросли — 2–4 фразы}}</p></div>
+  </section>
+
+  <!-- ГЛАВНОЕ -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Главное</h2></div>
+    <div class="main-grid">
+      <div class="main-item">
+        <div class="label">Главная боль</div>
+        <div class="what">{{Боль одной фразой}}</div>
+        <p class="q">«{{дословная цитата}}»</p>
+      </div>
+      <div class="main-item">
+        <div class="label">Чего хотят</div>
+        <div class="what">{{Желание одной фразой}}</div>
+        <p class="q">«{{дословная цитата}}»</p>
+      </div>
+      <div class="main-item">
+        <div class="label">Почему не покупают</div>
+        <div class="what">{{Главное возражение одной фразой}}</div>
+        <p class="q">«{{дословная цитата}}»</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТЕСТИРОВАТЬ ПЕРВЫМИ: ровно 3 угла -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Тестировать первыми</h2></div>
+    <p class="sec-lead">Три угла, за которые аудитория цепляется сильнее всего. Начни с них.</p>
+
+    <!-- ПОВТОРИ: карточка угла (3 раза, номера 1, 2, 3) -->
+    <article class="angle">
+      <div class="angle-head">
+        <div class="rank">1</div>
+        <div>
+          <h3>{{Название угла, 3–6 слов}}</h3>
+          <div class="meta">
+            <span class="pill score">{{8}}/10</span>
+            <span class="pill type">{{Тип: боль / желание / возражение / уже пробовали / идентичность / контраст / триггер / враг}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label">За что цепляем</div>
+        <p class="count">{{14}} человек <small>из {{186}} · {{430}} лайков · в {{4}} видео</small></p>
+        <blockquote>«{{дословная цитата 1}}»<span class="src"><a href="{{ссылка или убери}}">{{Источник: название видео · скрин 3}}</a></span></blockquote>
+        <blockquote>«{{дословная цитата 2}}»<span class="src"><span>{{Источник}}</span></span></blockquote>
+      </div>
+
+      <div class="block">
+        <div class="block-label">Что обещаем</div>
+        <p class="promise">{{Что продукт реально даёт против этой боли — 1–2 фразы}}</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label">Хуки</div>
+        <div class="hooks">
+          <div class="hook"><div class="h-body"><div class="h-type">Рилс · первые 3 секунды</div><div class="h-text">{{хук для рилс}}</div></div><button class="copy" type="button">Скопировать</button></div>
+          <div class="hook"><div class="h-body"><div class="h-type">Реклама · заголовок</div><div class="h-text">{{хук до 10 слов}}</div></div><button class="copy" type="button">Скопировать</button></div>
+          <div class="hook"><div class="h-body"><div class="h-type">Пост · первая строка</div><div class="h-text">{{первая строка поста}}</div></div><button class="copy" type="button">Скопировать</button></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label">Чем доказать</div>
+        <p class="proof">{{Кейс, скрин, демонстрация, отзыв}}</p>
+      </div>
+    </article>
+    <!-- /ПОВТОРИ -->
+  </section>
+
+  <!-- ЕЩЁ УГЛЫ -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Ещё углы</h2></div>
+    <!-- ПОВТОРИ: короткая карточка (2–4 раза) -->
+    <div class="mini">
+      <div class="mini-top"><h3>{{Название угла}}</h3><span class="pill score">{{6}}/10</span></div>
+      <p class="why">{{Тип}} · пишут {{9}} человек · «{{короткая цитата}}»</p>
+      <div class="hook"><div class="h-body"><div class="h-type">Хук для рилс</div><div class="h-text">{{хук}}</div></div><button class="copy" type="button">Скопировать</button></div>
+    </div>
+    <!-- /ПОВТОРИ -->
+  </section>
+
+  <!-- СЛОВАРЬ -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Словарь аудитории</h2></div>
+    <p class="sec-lead">Так клиенты сами называют проблему. Бери эти слова в тексты. Нажми на фразу — она скопируется.</p>
+    <div class="chips">
+      <!-- ПОВТОРИ: 12–20 фраз, дословно -->
+      <button class="chip" type="button">{{фраза}}</button>
+      <!-- /ПОВТОРИ -->
+    </div>
+  </section>
+
+  <!-- ВОЗРАЖЕНИЯ -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Возражения и что ответить</h2></div>
+    <!-- ПОВТОРИ: 3–5 возражений -->
+    <div class="obj">
+      <p class="say">«{{возражение их словами}}»</p>
+      <p class="n">{{так думают 11 человек}}</p>
+      <p class="answer"><b>Ответ:</b> {{чем закрыть — фраза для рекламы, кейс, гарантия, демонстрация}}</p>
+    </div>
+    <!-- /ПОВТОРИ -->
+  </section>
+
+  <!-- НЕОБЯЗАТЕЛЬНО: боли, которые продукт не закрывает -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Чего не хватает в продукте</h2></div>
+    <p class="sec-lead">Об этом много пишут, но твой продукт это пока не решает. Это не для рекламы — это идея для доработки.</p>
+    <!-- ПОВТОРИ -->
+    <div class="gap"><b>{{Боль}}</b> — пишут {{7}} человек. «{{цитата}}»</div>
+    <!-- /ПОВТОРИ -->
+  </section>
+
+  <!-- КАК ТЕСТИРОВАТЬ -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Как тестировать</h2></div>
+    <ol class="steps">
+      <li>Возьми три угла из блока «Тестировать первыми».</li>
+      <li>На каждый сделай 2 варианта с разными хуками. Всё остальное одинаковое: визуал, оффер, длина.</li>
+      <li>{{Запусти одновременно с одинаковым бюджетом — или публикуй в одно и то же время в разные дни.}}</li>
+      <li>{{Смотри на одну цифру: для рилс — досмотры первых 3 секунд и сохранения, для рекламы — цена заявки, для постов — переходы.}}</li>
+      <li>Победивший угол — масштабируй. Новые хуки под него бери из словаря аудитории.</li>
+    </ol>
+  </section>
+
+  <!-- ИСТОЧНИКИ -->
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Откуда комментарии</h2></div>
+    <ul class="sources">
+      <!-- ПОВТОРИ -->
+      <li><a href="{{ссылка или убери}}">{{Название видео или страницы}}</a> <span class="c">· {{38}} комментариев</span></li>
+      <!-- /ПОВТОРИ -->
+    </ul>
+  </section>
+
+  <footer>Сделано навыком <b>«Рекламные углы»</b> · @mama_mozg</footer>
+</main>
+
+<script>
+(function(){
+  function copyText(text, el){
+    var done=function(){
+      var old=el.textContent; el.classList.add('done');
+      if(el.classList.contains('copy')) el.textContent='Готово';
+      setTimeout(function(){el.classList.remove('done'); if(el.classList.contains('copy')) el.textContent=old;},1400);
+    };
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(text).then(done,function(){fallback(text);done();});
+        return;
+      }
+    }catch(e){}
+    fallback(text); done();
+  }
+  function fallback(text){
+    try{
+      var t=document.createElement('textarea'); t.value=text; t.setAttribute('readonly','');
+      t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t);
+      t.select(); document.execCommand('copy'); document.body.removeChild(t);
+    }catch(e){}
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.copy');
+    if(b){ var h=b.closest('.hook').querySelector('.h-text'); copyText(h.textContent.trim(), b); return; }
+    var c=e.target.closest('.chip');
+    if(c){ copyText(c.textContent.trim(), c); }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Рекламные углы — AI-Лавка (пример)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:#FF6B6B; --coral-soft:#FFF0F0; --coral-line:#FFD6D6;
+    --blue:#0066FF; --blue-soft:#EEF4FF;
+    --ink:#1A1A1A; --ink-2:#333333; --muted:#6B6B6B;
+    --paper:#FFFFFF; --bg:#FAFAF7; --line:#ECECEC; --grey-soft:#F5F5F5;
+    --radius:22px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    font-size:19px;line-height:1.55}
+  .page{max-width:780px;margin:0 auto;padding:28px 16px 64px}
+  h1,h2,h3{line-height:1.15;margin:0;letter-spacing:-.01em}
+  p{margin:0}
+  a{color:var(--blue)}
+
+  /* Обложка */
+  .cover{background:var(--paper);border-radius:28px;padding:36px 28px 30px;
+    border:1px solid var(--line);position:relative;overflow:hidden}
+  .cover::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;
+    border-radius:50%;background:var(--coral);opacity:.12}
+  .kicker{display:inline-block;font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--coral);margin-bottom:14px}
+  .cover h1{font-size:42px;font-weight:800}
+  .cover .sub{color:var(--ink-2);margin-top:12px;font-size:19px}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .stat{background:var(--grey-soft);border-radius:999px;padding:8px 16px;font-size:16px;font-weight:600}
+  .stat b{color:var(--coral)}
+  .note{margin-top:18px;font-size:16px;color:var(--muted);background:var(--grey-soft);border-radius:14px;padding:12px 16px}
+
+  /* Секции */
+  section{margin-top:44px}
+  .sec-title{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .sec-title h2{font-size:30px;font-weight:800}
+  .sec-title .dot{width:14px;height:14px;border-radius:50%;background:var(--coral);flex:none}
+  .sec-lead{color:var(--muted);margin:-6px 0 18px;font-size:17px}
+
+  /* Главное */
+  .main-grid{display:grid;gap:14px}
+  .main-item{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+  .main-item .label{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--coral)}
+  .main-item .what{font-size:22px;font-weight:700;margin-top:6px}
+  .main-item .q{margin-top:10px;color:var(--ink-2);font-size:17px}
+
+  /* Карточка угла */
+  .angle{background:var(--paper);border:2px solid var(--coral-line);border-radius:26px;padding:26px 22px;margin-bottom:22px;break-inside:avoid}
+  .angle-head{display:flex;gap:14px;align-items:flex-start}
+  .rank{flex:none;width:52px;height:52px;border-radius:16px;background:var(--coral);color:#fff;
+    font-weight:800;font-size:26px;display:flex;align-items:center;justify-content:center}
+  .angle-head h3{font-size:26px;font-weight:800;padding-top:4px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .pill{font-size:15px;font-weight:600;border-radius:999px;padding:5px 12px;background:var(--grey-soft);color:var(--ink-2)}
+  .pill.score{background:var(--blue);color:#fff}
+  .pill.type{background:var(--coral-soft);color:#C94444}
+  .block{margin-top:20px}
+  .block-label{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .count{font-size:20px;font-weight:700}
+  .count small{font-weight:500;color:var(--muted);font-size:16px}
+  blockquote{margin:10px 0 0;background:var(--coral-soft);border-left:5px solid var(--coral);
+    border-radius:0 16px 16px 0;padding:14px 18px;font-size:19px}
+  blockquote .src{display:block;margin-top:6px;font-size:14px;color:var(--muted)}
+  blockquote .src a,blockquote .src span{color:var(--muted)}
+  .promise{font-size:19px}
+  .hooks{display:grid;gap:10px}
+  .hook{display:flex;gap:12px;align-items:center;background:var(--blue-soft);border-radius:16px;padding:14px 14px 14px 18px}
+  .hook .h-body{flex:1;min-width:0}
+  .hook .h-type{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+  .hook .h-text{font-size:20px;font-weight:700;margin-top:2px}
+  .copy{flex:none;border:2px solid var(--blue);background:#fff;color:var(--blue);border-radius:12px;
+    font:600 15px "Onest",system-ui,sans-serif;padding:9px 12px;cursor:pointer;min-height:44px}
+  .copy:hover{background:var(--blue);color:#fff}
+  .copy.done{background:var(--blue);color:#fff}
+  .proof{background:var(--grey-soft);border-radius:14px;padding:12px 16px;font-size:17px}
+
+  /* Короткие углы */
+  .mini{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;break-inside:avoid}
+  .mini-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  .mini h3{font-size:21px;font-weight:700}
+  .mini .why{color:var(--muted);font-size:16px;margin-top:4px}
+  .mini .hook{margin-top:12px}
+
+  /* Словарь */
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{border:2px solid var(--coral-line);background:var(--paper);border-radius:999px;padding:9px 16px;
+    font:500 17px "Onest",system-ui,sans-serif;color:var(--ink);cursor:pointer;text-align:left}
+  .chip:hover,.chip.done{border-color:var(--coral);background:var(--coral-soft)}
+
+  /* Возражения */
+  .obj{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;break-inside:avoid}
+  .obj .say{font-size:20px;font-weight:700}
+  .obj .n{font-size:15px;color:var(--muted);margin-top:2px}
+  .obj .answer{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+  .obj .answer b{color:var(--blue)}
+
+  /* Боли без решения */
+  .gap{background:var(--grey-soft);border-radius:var(--radius);padding:18px 20px;margin-bottom:10px}
+
+  /* Шаги */
+  .steps{counter-reset:s;display:grid;gap:12px;padding:0;margin:0;list-style:none}
+  .steps li{counter-increment:s;background:var(--paper);border:1px solid var(--line);border-radius:18px;
+    padding:16px 18px 16px 70px;position:relative}
+  .steps li::before{content:counter(s);position:absolute;left:18px;top:14px;width:36px;height:36px;border-radius:12px;
+    background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+  /* Источники */
+  .sources{padding:0;margin:0;list-style:none;display:grid;gap:8px;font-size:17px}
+  .sources li{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+  .sources .c{color:var(--muted);font-size:15px}
+
+  footer{margin-top:52px;text-align:center;color:var(--muted);font-size:15px}
+  footer b{color:var(--coral)}
+
+  @media (max-width:560px){
+    body{font-size:18px}
+    .cover{padding:28px 20px 24px}
+    .cover h1{font-size:33px}
+    .cover::after{width:130px;height:130px;right:-55px;top:-55px}
+    .sec-title h2{font-size:25px}
+    .angle{padding:22px 16px}
+    .angle-head h3{font-size:22px}
+    .rank{width:44px;height:44px;font-size:22px;border-radius:14px}
+    .hook{flex-direction:column;align-items:stretch}
+    .copy{width:100%}
+    .steps li{padding-left:64px}
+  }
+  @media print{
+    body{background:#fff;font-size:15px}
+    .page{padding:0}
+    .copy{display:none}
+    .chip{cursor:default}
+    section{margin-top:28px}
+    .angle,.mini,.obj{break-inside:avoid}
+    a{color:var(--ink);text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="cover">
+    <div class="kicker">Рекламные углы</div>
+    <h1>AI-Лавка: готовые ИИ-агенты</h1>
+    <p class="sub">Для экспертов, SMM-специалистов и блогеров, которые хотят делать контент быстрее с помощью Claude и Codex</p>
+    <div class="stats">
+      <span class="stat"><b>625</b> комментариев</span>
+      <span class="stat"><b>7</b> видео</span>
+      <span class="stat"><b>6</b> углов</span>
+      <span class="stat">7 октября 2026</span>
+    </div>
+    <p class="note">Это пример: настоящие комментарии с YouTube. Больше половины — благодарности и ответы авторов, они в подсчёт не вошли.</p>
+  </header>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Главное</h2></div>
+    <div class="main-grid">
+      <div class="main-item">
+        <div class="label">Главная боль</div>
+        <div class="what">Каждый ролик даётся через силу, а результата нет</div>
+        <p class="q">«я мучаюсь каждый день с сценариеми съёмками мантажем уже посинел от недосыпа потому что каждый новый сценарий прям приходиться как будто бы высасывать из пальца»</p>
+      </div>
+      <div class="main-item">
+        <div class="label">Чего хотят</div>
+        <div class="what">Чтобы работа, которая съедала ночи, делалась за полчаса</div>
+        <p class="q">«Работа на которую уходили целые ночи делается за пол часа»</p>
+      </div>
+      <div class="main-item">
+        <div class="label">Почему не покупают</div>
+        <div class="what">Не верят платному: бесплатные видео кажутся полезнее курсов</div>
+        <p class="q">«факт, что это видео сильнее 90% платных курсов🔥🔥» — 343 лайка</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Тестировать первыми</h2></div>
+    <p class="sec-lead">Три угла, за которые аудитория цепляется сильнее всего. Начни с них.</p>
+
+    <article class="angle">
+      <div class="angle-head">
+        <div class="rank">1</div>
+        <div>
+          <h3>Хватит покупать курсы</h3>
+          <div class="meta">
+            <span class="pill score">9/10</span>
+            <span class="pill type">Контраст · возражение</span>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-label">За что цепляем</div>
+        <p class="count">14 человек <small>· ~650 лайков · в 3 видео</small></p>
+        <blockquote>«Купила дорогой курс (140.000) и поняла, что никто не собирается делиться со мной знаниями и не будет учить меня премудростям профессии. Все поверхностно, все вода 😆»<span class="src"><a href="https://www.youtube.com/watch?v=Djh6KrQE5r8">Полная схема ведения Reels в 2026</a></span></blockquote>
+        <blockquote>«Одни активно продают разные курсы с ИИ, другие делятся даром.»<span class="src"><a href="https://www.youtube.com/watch?v=PfdLTCWTXxU">10 секретных GEM-ботов, которые делают контент за вас</a> · 102 лайка</span></blockquote>
+      </div>
+      <div class="block">
+        <div class="block-label">Что обещаем</div>
+        <p class="promise">Готовый агент сам делает работу: контент-план, тексты, монтаж. Разовая оплата, урок по настройке, работает в Claude и Codex.</p>
+      </div>
+      <div class="block">
+        <div class="block-label">Хуки</div>
+        <div class="hooks">
+          <div class="hook"><div class="h-body"><div class="h-type">Рилс · первые 3 секунды</div><div class="h-text">Покупала курсы по нейросетям, а там вода? Дело не в тебе.</div></div><button class="copy" type="button">Скопировать</button></div>
+          <div class="hook"><div class="h-body"><div class="h-type">Реклама · заголовок</div><div class="h-text">Вместо ещё одного курса — агент, который работает за тебя</div></div><button class="copy" type="button">Скопировать</button></div>
+          <div class="hook"><div class="h-body"><div class="h-type">Пост · первая строка</div><div class="h-text">Сколько курсов по нейросетям ты уже купила? И сколько из них работают на тебя каждый день?</div></div><button class="copy" type="button">Скопировать</button></div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-label">Чем доказать</div>
+        <p class="proof">Запись экрана: агент за 5 минут делает контент-план на месяц. Без монтажа и обещаний — просто процесс.</p>
+      </div>
+    </article>
+
+    <article class="angle">
+      <div class="angle-head">
+        <div class="rank">2</div>
+        <div>
+          <h3>Каждый сценарий — из пальца</h3>
+          <div class="meta">
+            <span class="pill score">8/10</span>
+            <span class="pill type">Боль</span>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-label">За что цепляем</div>
+        <p class="count">10 человек <small>· ~250 лайков · в 3 видео</small></p>
+        <blockquote>«я смотрю и негодую тем 100 роликам которые я успел выложить за последние 3 месяца... я так и не сделал не одного залетевшего ролика, я мучаюсь каждый день с сценариеми съёмками мантажем уже посинел от недосыпа»<span class="src"><a href="https://www.youtube.com/watch?v=Djh6KrQE5r8">Полная схема ведения Reels в 2026</a> · 123 лайка</span></blockquote>
+        <blockquote>«Я делаю челендж 100 дней рилс и немного начал выгорать»<span class="src"><a href="https://www.youtube.com/watch?v=Djh6KrQE5r8">Полная схема ведения Reels в 2026</a></span></blockquote>
+      </div>
+      <div class="block">
+        <div class="block-label">Что обещаем</div>
+        <p class="promise">Темы, сценарии и монтаж берут на себя агенты. Ты не начинаешь каждый день с чистого листа.</p>
+      </div>
+      <div class="block">
+        <div class="block-label">Хуки</div>
+        <div class="hooks">
+          <div class="hook"><div class="h-body"><div class="h-type">Рилс · первые 3 секунды</div><div class="h-text">Каждый сценарий высасываешь из пальца? Отдай это ИИ-агенту.</div></div><button class="copy" type="button">Скопировать</button></div>
+          <div class="hook"><div class="h-body"><div class="h-type">Реклама · заголовок</div><div class="h-text">Сценарии на месяц вперёд — без недосыпа</div></div><button class="copy" type="button">Скопировать</button></div>
+          <div class="hook"><div class="h-body"><div class="h-type">Пост · первая строка</div><div class="h-text">Сто роликов за три месяца, недосып и ни одного залетевшего. Узнаёшь себя?</div></div><button class="copy" type="button">Скопировать</button></div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-label">Чем доказать</div>
+        <p class="proof">Показать, как агент выдаёт 30 тем и готовый сценарий по одной из них — в реальном времени.</p>
+      </div>
+    </article>
+
+    <article class="angle">
+      <div class="angle-head">
+        <div class="rank">3</div>
+        <div>
+          <h3>Повторяешь за блогерами — не работает</h3>
+          <div class="meta">
+            <span class="pill score">7/10</span>
+            <span class="pill type">Уже пробовали</span>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-label">За что цепляем</div>
+        <p class="count">18 человек <small>· мало лайков, но больше всего вопросов · в 4 видео</small></p>
+        <blockquote>«сколько роликов просмотрел, каждый клик повторял и даже лично обращаюсь к Вам. И Я не могу до этого уровня дойти.»<span class="src"><a href="https://www.youtube.com/watch?v=oboGblxGl2A">Просто начни зарабатывать с помощью Claude</a></span></blockquote>
+        <blockquote>«vpn недостаточно, нужен номер телефона не из рф, и как же все используют?»<span class="src"><a href="https://www.youtube.com/watch?v=uF9-0_ty9do">Claude заменит всех?</a> · 4 ответа</span></blockquote>
+      </div>
+      <div class="block">
+        <div class="block-label">Что обещаем</div>
+        <p class="promise">Агент уже собран и настроен. К нему идёт урок по запуску — повторять за блогером клик за кликом не нужно.</p>
+      </div>
+      <div class="block">
+        <div class="block-label">Хуки</div>
+        <div class="hooks">
+          <div class="hook"><div class="h-body"><div class="h-type">Рилс · первые 3 секунды</div><div class="h-text">Повторяешь каждый клик за блогером — а у тебя не работает?</div></div><button class="copy" type="button">Скопировать</button></div>
+          <div class="hook"><div class="h-body"><div class="h-type">Реклама · заголовок</div><div class="h-text">Готовый ИИ-агент и урок, как его запустить</div></div><button class="copy" type="button">Скопировать</button></div>
+          <div class="hook"><div class="h-body"><div class="h-type">Пост · первая строка</div><div class="h-text">Тебе показывают результат за 16 минут. А путь до него — нет.</div></div><button class="copy" type="button">Скопировать</button></div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-label">Чем доказать</div>
+        <p class="proof">Отзыв новичка: «запустила с первого раза по уроку» — со скриншотом.</p>
+      </div>
+    </article>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Ещё углы</h2></div>
+    <div class="mini">
+      <div class="mini-top"><h3>Тебе не поздно начать</h3><span class="pill score">7/10</span></div>
+      <p class="why">Идентичность · пишут 20+ человек 40–70 лет · «Мне 41, хочу, но боюсь себя в мир показать»</p>
+      <div class="hook"><div class="h-body"><div class="h-type">Хук для рилс</div><div class="h-text">Думаешь, в 47 поздно заводить блог? Комментарии под этим видео с тобой не согласны.</div></div><button class="copy" type="button">Скопировать</button></div>
+    </div>
+    <div class="mini">
+      <div class="mini-top"><h3>Полчаса вместо ночи</h3><span class="pill score">6/10</span></div>
+      <p class="why">Желание · пишут 9 человек · «Работа на которую уходили целые ночи делается за пол часа»</p>
+      <div class="hook"><div class="h-body"><div class="h-type">Хук для рилс</div><div class="h-text">То, на что у тебя уходит ночь, агент делает за полчаса.</div></div><button class="copy" type="button">Скопировать</button></div>
+    </div>
+    <div class="mini">
+      <div class="mini-top"><h3>Нейросеть пишет как робот</h3><span class="pill score">6/10</span></div>
+      <p class="why">Возражение · пишут 8 человек · «текст после ChatGPT правлю - много «машинной поэзии»»</p>
+      <div class="hook"><div class="h-body"><div class="h-type">Хук для рилс</div><div class="h-text">Тексты от нейросети видно за версту? Так бывает, когда промпт пишешь с нуля.</div></div><button class="copy" type="button">Скопировать</button></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Словарь аудитории</h2></div>
+    <p class="sec-lead">Так люди сами называют проблему. Бери эти слова в тексты. Нажми на фразу — она скопируется.</p>
+    <div class="chips">
+      <button class="chip" type="button">высасывать из пальца</button>
+      <button class="chip" type="button">уже посинел от недосыпа</button>
+      <button class="chip" type="button">не одного залетевшего ролика</button>
+      <button class="chip" type="button">Все поверхностно, все вода</button>
+      <button class="chip" type="button">сильнее 90% платных курсов</button>
+      <button class="chip" type="button">без воды</button>
+      <button class="chip" type="button">каждый клик повторял</button>
+      <button class="chip" type="button">ЭТО БОЛЬ ДИКАЯ</button>
+      <button class="chip" type="button">машинной поэзии</button>
+      <button class="chip" type="button">ультпжелтыми заголовками</button>
+      <button class="chip" type="button">нейронки ещё те фантазёры</button>
+      <button class="chip" type="button">бесят лимиты</button>
+      <button class="chip" type="button">Ощущение кринжа не покидает</button>
+      <button class="chip" type="button">Сквозь лютейший перфекционизм</button>
+      <button class="chip" type="button">плюнула на всех</button>
+      <button class="chip" type="button">внутреннего согласия и разрешения нет</button>
+      <button class="chip" type="button">прекратил коллекционировать мотивацию</button>
+      <button class="chip" type="button">Нейронки затягивают с ушами по самые пятки</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Возражения и что ответить</h2></div>
+    <div class="obj">
+      <p class="say">«Одни активно продают разные курсы с ИИ, другие делятся даром»</p>
+      <p class="n">так думают 14 человек</p>
+      <p class="answer"><b>Ответ:</b> не спорь с бесплатным. Покажи разницу: видео учит, агент делает работу каждый день. Дай бесплатно попробовать кусочек — например, демо-результат.</p>
+    </div>
+    <div class="obj">
+      <p class="say">«vpn недостаточно, нужен номер телефона не из рф»</p>
+      <p class="n">про регистрацию и оплату спрашивают около 10 человек</p>
+      <p class="answer"><b>Ответ:</b> честно скажи, что нужен доступ к Claude или Codex, и покажи урок по запуску. Страх «не смогу подключить» снимается одной понятной инструкцией.</p>
+    </div>
+    <div class="obj">
+      <p class="say">«зачем мне снимать видео на широкую аудиторию, если работаю с узким сегментом?»</p>
+      <p class="n">так думают 7 человек, под одним комментарием 22 ответа</p>
+      <p class="answer"><b>Ответ:</b> покажи примеры из разных ниш: психолог, парикмахер, художник. Пусть человек увидит себя.</p>
+    </div>
+    <div class="obj">
+      <p class="say">«Все тексты типичные шаблоны ИИ-шных сообщений»</p>
+      <p class="n">так думают 8 человек</p>
+      <p class="answer"><b>Ответ:</b> покажи «до и после»: ответ обычного чата и результат агента на одну и ту же задачу.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Чего не хватает в продукте</h2></div>
+    <p class="sec-lead">Об этом много пишут, но агенты это пока не решают. Это не для рекламы — это идеи для новых продуктов и контента.</p>
+    <div class="gap"><b>Нет просмотров, алгоритм не показывает</b> — пишут 10 человек. «Начал ! В итоге 6 просмотров)))»</div>
+    <div class="gap"><b>Страшно показаться, что скажут знакомые</b> — пишут 20+ человек, самые залайканные комментарии. «Всегда сдерживало мнение коллег, знакомых и родственников» — 223 лайка</div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Как тестировать</h2></div>
+    <ol class="steps">
+      <li>Возьми три угла из блока «Тестировать первыми».</li>
+      <li>На каждый сделай 2 рилса с разными хуками. Всё остальное одинаковое: визуал, длина, призыв.</li>
+      <li>Публикуй в одно и то же время в разные дни.</li>
+      <li>Смотри на одну цифру: сколько человек написали кодовое слово под рилсом.</li>
+      <li>Победивший угол масштабируй. Новые хуки под него бери из словаря аудитории.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span><h2>Откуда комментарии</h2></div>
+    <ul class="sources">
+      <li><a href="https://www.youtube.com/watch?v=Djh6KrQE5r8">Полная схема ведения Reels в 2026</a> <span class="c">· Михаил Тимочко · 1437 комментариев</span></li>
+      <li><a href="https://www.youtube.com/watch?v=R81eZmCUE2E">ВСЁ о ведении соцсетей в 2026</a> <span class="c">· Артем Сенаторов · 496 комментариев</span></li>
+      <li><a href="https://www.youtube.com/watch?v=gdr4SUn_MVc">Полный гайд по Claude</a> <span class="c">· Web3nity · 542 комментария</span></li>
+      <li><a href="https://www.youtube.com/watch?v=oboGblxGl2A">Просто начни зарабатывать с помощью Claude</a> <span class="c">· Георгий Ривера · 383 комментария</span></li>
+      <li><a href="https://www.youtube.com/watch?v=PfdLTCWTXxU">10 секретных GEM-ботов, которые делают контент за вас</a> <span class="c">· SeTka Project · 356 комментариев</span></li>
+      <li><a href="https://www.youtube.com/watch?v=uF9-0_ty9do">Claude заменит всех?</a> <span class="c">· Мария Сухоруких · 100 комментариев</span></li>
+      <li><a href="https://www.youtube.com/watch?v=24ObZX1fGoQ">Инстаграм с нуля в 2026 — мой план на 30 дней</a> <span class="c">· Борис Батищев · 200 комментариев</span></li>
+    </ul>
+  </section>
+
+  <footer>Сделано навыком <b>«Рекламные углы»</b> · @mama_mozg</footer>
+</main>
+
+<script>
+(function(){
+  function copyText(text, el){
+    var done=function(){
+      var old=el.textContent; el.classList.add('done');
+      if(el.classList.contains('copy')) el.textContent='Готово';
+      setTimeout(function(){el.classList.remove('done'); if(el.classList.contains('copy')) el.textContent=old;},1400);
+    };
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(text).then(done,function(){fallback(text);done();});
+        return;
+      }
+    }catch(e){}
+    fallback(text); done();
+  }
+  function fallback(text){
+    try{
+      var t=document.createElement('textarea'); t.value=text; t.setAttribute('readonly','');
+      t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t);
+      t.select(); document.execCommand('copy'); document.body.removeChild(t);
+    }catch(e){}
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.copy');
+    if(b){ var h=b.closest('.hook').querySelector('.h-text'); copyText(h.textContent.trim(), b); return; }
+    var c=e.target.closest('.chip');
+    if(c){ copyText(c.textContent.trim(), c); }
+  });
+})();
+</script>
+</body>
+</html>
